@@ -1,16 +1,17 @@
 <template>
   <div id="app">
-    <router-view/>
+    aaa
+    <!-- <router-view /> -->
   </div>
 </template>
 
 <script>
-String.prototype.replaceAll = function(FindText, RepText) {
-  return this.replace(new RegExp(FindText, 'g'), RepText)
-}
+String.prototype.replaceAll = function (FindText, RepText) {
+  return this.replace(new RegExp(FindText, "g"), RepText);
+};
 export default {
-  name: 'App'
-}
+  name: "App",
+};
 </script>
 <style lang="scss">
 .float-header {
