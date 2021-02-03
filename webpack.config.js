@@ -13,10 +13,10 @@ const commomCssLoader = [
 ]
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/main.js',
     output: {
-        filename: 'build.js',
-        path: resolve(__dirname, 'build')
+        filename: 'static/main.js',
+        path: resolve(__dirname, 'dist')
     },
     module: {
         rules: [
@@ -38,18 +38,12 @@ module.exports = {
                                 safari: '10',
                                 edge: '17'
                             }
-                        }]]
+                        }]],
+                        cacheDirectory: true
                     }
                 },
-                    // {
-                    //     loader: 'eslint-loader',
-                    //     options: {
-                    //         fix: true
-                    //     }
-                    // }
                 ],
-            },
-            {
+            }, {
                 test: /\.css$/,
                 use: [...commomCssLoader
                 ]
@@ -89,7 +83,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './src/index.html',
+            template: './src/static/index.html',
             minify: {
                 // 折叠空格
                 collapseWhitespace: true,
@@ -104,5 +98,11 @@ module.exports = {
             }),
         new OptimizeCssAssetsPlugin()
     ],
-    mode: 'production',//生产模式自动压缩js代码
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
+    mode: 'production',//生产模式自动压缩js代码 
+
 }
