@@ -84,17 +84,19 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/static/index.html',
+            favicon: './src/static/favicon.ico',
+            inject: true,
             minify: {
                 // 折叠空格
                 collapseWhitespace: true,
                 // 移除注释
-                removeComments: true
+                removeComments: true,
             }
         }),
         new MiniCssExtractPlugin(
             {
-                filename: 'css/index.css',
-                chunkFilename: 'css/[id].css',
+                filename: 'static/index.css',
+                chunkFilename: 'static/[id].css',
             }),
         new OptimizeCssAssetsPlugin()
     ],
