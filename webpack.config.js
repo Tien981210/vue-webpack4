@@ -26,25 +26,33 @@ module.exports = {
                 {
                     test: /\.js$/,
                     exclude: /node_module/,
-                    loader: [{
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [['@babel/preset-env', {
-                                useBuiltIns: 'usage',
-                                corejs: {
-                                    version: 3
-                                },
-                                targets: {
-                                    chrome: '60',
-                                    firefox: '60',
-                                    ie: '9',
-                                    safari: '10',
-                                    edge: '17'
-                                }
-                            }]],
-                            cacheDirectory: true
+                    use: [
+                        /* 多进程打包 */
+                        {
+                            loader: 'thred-loader',
+                            options: {
+                                works: 2
+                            }
                         }
-                    },
+                        , {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [['@babel/preset-env', {
+                                    useBuiltIns: 'usage',
+                                    corejs: {
+                                        version: 3
+                                    },
+                                    targets: {
+                                        chrome: '60',
+                                        firefox: '60',
+                                        ie: '9',
+                                        safari: '10',
+                                        edge: '17'
+                                    }
+                                }]],
+                                cacheDirectory: true
+                            }
+                        }
                     ],
                 },
                 {
@@ -110,7 +118,7 @@ module.exports = {
             chunks: 'all'
         }
     },
-    mode: 'production',//生产模式自动压缩js代码 
+    mode: 'production',//生产模式自动压缩js代码
     // mode: 'development',开发环境
     resolve: {
         //配置路径别名
@@ -129,7 +137,7 @@ module.exports = {
         compress: true,
         port: 8373,
         open: true,
-        // hot: true
+        // hot: true  
     },
     devtool: 'cheap-source-map'
 
