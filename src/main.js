@@ -6,7 +6,7 @@ import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 
 import '@/styles/index.scss' // global css
-import App from './App'
+import App from './App.vue'
 import router from './router'
 import store from './store'
 

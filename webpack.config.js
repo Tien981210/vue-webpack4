@@ -3,6 +3,7 @@ const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const commomCssLoader = [
 
     MiniCssExtractPlugin.loader,
@@ -16,85 +17,88 @@ process.env.NODE_ENV = 'production'
 module.exports = {
     entry: './src/main.js',
     output: {
-        filename: 'static/main.[contenthash:10].js',
+        filename: 'static/main.js',
         path: resolve(__dirname, 'dist')
     },
     module: {
         rules: [{
-            oneOf: [
+            test: /\.vue$/,
+            loader: 'vue-loader',
 
+        },
+
+        {
+            test: /\.js$/,
+            exclude: /node_module/,
+            use: [
+                /* 多进程打包 */
                 {
-                    test: /\.js$/,
-                    exclude: /node_module/,
-                    use: [
-                        /* 多进程打包 */
-                        {
-                            loader: 'thread-loader',
-                            options: {
-                                works: 2
-                            }
-                        }
-                        , {
-                            loader: 'babel-loader',
-                            options: {
-                                presets: [['@babel/preset-env', {
-                                    useBuiltIns: 'usage',
-                                    corejs: {
-                                        version: 3
-                                    },
-                                    targets: {
-                                        chrome: '60',
-                                        firefox: '60',
-                                        ie: '9',
-                                        safari: '10',
-                                        edge: '17'
-                                    }
-                                }]],
-                                cacheDirectory: true
-                            }
-                        }
-                    ],
-                },
-                {
-                    test: /\.css$/,
-                    use: [...commomCssLoader
-                    ]
-                },
-                {
-                    test: /\.less$/,
-                    use: [
-                        ...commomCssLoader,
-                        'less-loader',
-                    ]
-                },
-                {
-                    test: /\.(png|jpg|gif)$/,
-                    loader: 'url-loader',
+                    loader: 'thread-loader',
                     options: {
-                        limit: 8 * 1024,
-                        name: '[hash:10].[ext]',
-                        outputPath: 'imgs',
-                        esModule: false
+                        works: 2
                     }
-                },
-                {
-                    test: /\.html$/,
-                    loader: 'html-withimg-loader'
-                },
-                {
-                    exclude: [/\.(css|less|jpg|png|gif|js|html)$/, /node_modules/],
-                    loader: 'file-loader',
+                }
+                , {
+                    loader: 'babel-loader',
                     options: {
-                        // name: '[hash:10].[ext]',
-                        outputPath: 'file',
-                        esModule: false
+                        presets: [['@babel/preset-env', {
+                            useBuiltIns: 'usage',
+                            corejs: {
+                                version: 3
+                            },
+                            targets: {
+                                chrome: '60',
+                                firefox: '60',
+                                ie: '9',
+                                safari: '10',
+                                edge: '17'
+                            }
+                        }]],
+                        cacheDirectory: true
                     }
-                },
+                }
+            ],
+        },
+        {
+            test: /\.css$/,
+            use: [...commomCssLoader
             ]
+        },
+        {
+            test: /\.less$/,
+            use: [
+                ...commomCssLoader,
+                'less-loader',
+            ]
+        },
+        {
+            test: /\.(png|jpg|gif)$/,
+            loader: 'url-loader',
+            options: {
+                limit: 8 * 1024,
+                name: '[hash:10].[ext]',
+                outputPath: 'imgs',
+                esModule: false
+            }
+        },
+        {
+            test: /\.html$/,
+            loader: 'html-withimg-loader'
+        },
+        {
+            exclude: [/\.(css|less|jpg|png|gif|js|html)$/, /node_modules/],
+            loader: 'file-loader',
+            options: {
+                // name: '[hash:10].[ext]',
+                outputPath: 'file',
+                esModule: false
+            }
         }
         ]
     },
     plugins: [
+
+        new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             template: './src/static/index.html',
             favicon: './src/static/favicon.ico',
@@ -111,7 +115,7 @@ module.exports = {
                 filename: 'static/index.[contenthash:10].css',
                 chunkFilename: 'static/[id].[contenthash:10].css',
             }),
-        new OptimizeCssAssetsPlugin()
+        new OptimizeCssAssetsPlugin(),
     ],
     optimization: {
         splitChunks: {
