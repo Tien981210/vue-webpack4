@@ -29,7 +29,7 @@ module.exports = {
                     use: [
                         /* 多进程打包 */
                         {
-                            loader: 'thred-loader',
+                            loader: 'thread-loader',
                             options: {
                                 works: 2
                             }
@@ -118,8 +118,8 @@ module.exports = {
             chunks: 'all'
         }
     },
-    mode: 'production',//生产模式自动压缩js代码
-    // mode: 'development',开发环境
+    // mode: 'production',//生产模式自动压缩js代码
+    mode: 'development',// 开发环境
     resolve: {
         //配置路径别名
         alias: {
@@ -137,7 +137,7 @@ module.exports = {
         compress: true,
         port: 8373,
         open: true,
-        // hot: true  
+        hot: true
     },
     devtool: 'cheap-source-map'
 
