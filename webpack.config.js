@@ -112,6 +112,18 @@ module.exports = {
     },
     mode: 'production',//生产模式自动压缩js代码 
     // mode: 'development',开发环境
+    resolve: {
+        //配置路径别名
+        alias: {
+            //简写路径
+            '@': resolve(__dirname, 'src'),
+        },
+        //配置省略文件后缀名的规则
+        extensions: [".ts", ".tsx", '.js', '.vue', '.json'],
+        //告诉webpack 解析模块时去那个目录
+        modules: [resolve(__dirname, '../../node_modules'), 'node_modules']
+
+    },
     devServer: {
         contentBase: resolve(__dirname, 'build'),
         compress: true,
