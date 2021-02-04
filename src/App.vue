@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <!-- <router-view /> -->
+    配置成功
+    <router-view />
   </div>
 </template>
 
@@ -8,10 +9,18 @@
 export default {
   name: "App",
   created() {
-    console.log("aaa");
+    console.log("aa");
   },
 };
 </script>
-<style lang="scss">
-</style>
 
+<style>
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>

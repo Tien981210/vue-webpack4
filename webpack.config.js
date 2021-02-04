@@ -12,7 +12,9 @@ const commomCssLoader = [
         loader: 'postcss-loader'
     }
 ]
-process.env.NODE_ENV = 'production'
+// process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'development'
+
 
 module.exports = {
     entry: './src/main.js',
@@ -26,7 +28,6 @@ module.exports = {
             loader: 'vue-loader',
 
         },
-
         {
             test: /\.js$/,
             exclude: /node_module/,
@@ -86,7 +87,7 @@ module.exports = {
             loader: 'html-withimg-loader'
         },
         {
-            exclude: [/\.(css|less|jpg|png|gif|js|html)$/, /node_modules/],
+            exclude: [/\.(css|less|jpg|png|gif|js|html|vue)$/, /node_modules/],
             loader: 'file-loader',
             options: {
                 // name: '[hash:10].[ext]',
