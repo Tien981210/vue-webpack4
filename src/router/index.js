@@ -1,10 +1,13 @@
+
+
+/* Layout */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
 
-/* Layout */
-// import Layout from '@/layout'
+
+Vue.use(VueRouter)
+import Layout from '@/layout'
 
 /* VueRouter Modules */
 
@@ -37,47 +40,25 @@ Vue.use(VueRouter)
 const constantRoutes = [
 
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
-    hidden: true
-  },
-  {
-    path: '/404',
-    component: () => import('@/views/error-page/404'),
-    hidden: true
-  },
-  {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
-  },
-  {
     path: '/',
-    component: resolve => { require([process.env.VUE_APP_LAYOUT], resolve) },
+    component: Layout,
     redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/dashboard/index.vue'),
+        // component: (resolve) => require(['@/views/dashboard/index'], resolve),
         name: 'Dashboard',
         meta: { title: '主页', icon: 'dashboard', affix: true }
       }
     ]
   },
-
-
-
-  { path: '*', redirect: '/404', hidden: true }
 ]
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-
-export default constantRoutes
+export default new VueRouter({
+  routes: constantRoutes
+})

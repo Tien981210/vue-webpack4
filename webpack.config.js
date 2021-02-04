@@ -100,8 +100,9 @@ module.exports = {
 
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
+            // filename: 'index.html',
             template: './src/static/index.html',
-            favicon: './src/static/favicon.ico',
+            // favicon: './src/static/favicon.ico',
             inject: true,
             minify: {
                 // 折叠空格
